@@ -1,1 +1,1 @@
-node ex1.js
+web: node ex1.js
