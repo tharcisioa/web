@@ -18,7 +18,7 @@
     "express-messages": "^1.0.1",
     "express-session": "^1.15.2",
     "joi": "^13.0.1",
-    "mongoose": "^4.11.12",
+    "mongoose": "^5.7.10",
     "morgan": "^1.8.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
