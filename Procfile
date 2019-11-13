@@ -1,0 +1,1 @@
+web: node ex1.js
