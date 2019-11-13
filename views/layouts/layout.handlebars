@@ -1,0 +1,18 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    {{#if success_messages }}
+      <div class="alert alert-success">{{success_messages}}</div>
+    {{/if}}
+    {{#if error_messages }}
+      <div class="alert alert-danger">{{error_messages}}</div>
+    {{/if}}
+    <div class="container">
+      {{> navbar}}
+      {{{body}}}
+    </div>
+ 
+  </body>
+</html>
