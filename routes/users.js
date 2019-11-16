@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router()
 const Joi = require('joi')
 const passport = require('passport')
-require('../config/passport')
+const bcrypt = require ('bcryptjs')
  
 const User = require('../models/user')
+const Post = require('../models/post')
  
  
 //validation schema
@@ -14,6 +15,10 @@ const userSchema = Joi.object().keys({
   username: Joi.string().required(),
   password: Joi.string().regex(/^[a-zA-Z0-9]{6,30}$/).required(),
   confirmationPassword: Joi.any().valid(Joi.ref('password')).required()
+})
+
+const postSchema = Joi.object().keys({
+  content: Joi.string().required()
 })
  
 router.route('/register')
@@ -36,10 +41,11 @@ router.route('/register')
         return
       }
  
-      const hash = await User.hashPassword(result.value.password)
+      //const hash = await User.hashPassword(result.value.password)
  
-      delete result.value.confirmationPassword
-      result.value.password = hash
+      //delete result.value.confirmationPassword
+      //result.value.password = hash
+      result.value.password = bcrypt.hashSync(result.value.password, 10);
  
       const newUser = await new User(result.value)
       await newUser.save()
@@ -52,4 +58,54 @@ router.route('/register')
     }
   })
  
+  router.route('/login')
+  .get((req, res) => {
+    res.render('login')
+  })
+  .post(async(req, res) =>{
+    const result = Joi.validate(req.body, userSchema)
+    ses = req.session
+    const user = await User.findOne({'email': result.value.email})
+          if(user){
+            //const hash = await User.hashPassword(result.value.password)
+            //elete result.value.confirmationPassword
+            //result.value.password = hash
+            if(!bcrypt.compareSync(result.value.password, user.password)) {
+              return false
+    }
+    ses.user = user
+    //res.send("ois"+user.username)
+    res.redirect('/users/dashboard') 
+  }
+    return false
+});
+router.route('/dashboard')
+  .get((req, res) => {
+    res.render('dashboard')
+    
+  })
+  .post(async(req,res) =>{
+    session = req.session
+    const result = Joi.validate(req.body, postSchema)
+    result.value.username = req.session.user.username
+    const newTweet = await new Post(result.value)
+      await newTweet.save()
+      res.redirect('/users/show')
+  })
+     //const user= await Post.findOne({'username': result.value.username })
+     
+
+
+  router.route('/show')
+    .get((req, res) => {
+          res.render('show')
+    
+  })
+  .post(async(req,res) =>{
+    session = req.session
+    Post.find({ 'username': req.session.user.username }, 'username content', function (err, post) {
+      if (err) return handleError(err);
+      res.send(post)
+    }).limit(10);
+  })
   module.exports = router

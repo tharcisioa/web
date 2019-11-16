@@ -9,19 +9,15 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const mongoose = require('mongoose')
 const passport = require('passport')
-require('./config/passport')(passport);
+require('./config/passport')(passport)
 
 
-mongoose.connect('mongodb://localhost/passport-tutorial');
-mongoose.set('debug', true);
+mongoose.Promise = global.Promise
+mongoose.connect('mongodb://localhost:27017/site-auth')
 
-// 1
+
 const app = express()
 app.use(morgan('dev'))
-require("./models/user")
-app.use('/', require('./routes/index'))
-app.use('/users', require('./routes/users'))
-
  
 // 2
 app.set('views', path.join(__dirname, 'views'))
@@ -52,11 +48,11 @@ app.use((req, res, next) => {
 })
  
 // 5
+app.use('/', require('./routes/index'))
+app.use('/users', require('./routes/users'))
+ 
 // 6
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-  res.render('notFound')
-});
+// catch 404 and forward to error handle
  
 // 7
-app.listen(process.env.PORT || 5000 , () => console.log('Server started listening on port 5000!'))
+app.listen(5000, () => console.log('Server started listening on port 5000!'))
