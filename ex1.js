@@ -14,6 +14,7 @@ require('./config/passport')(passport)
 
 mongoose.Promise = global.Promise
 mongoose.connect('mongodb://localhost:27017/site-auth')
+mongoose.connect('mongodb://heroku_vvkx14vr:d41pog6sjgov1dedaavslp6ohf@ds347298.mlab.com:47298/heroku_vvkx14vr')
 
 
 const app = express()
