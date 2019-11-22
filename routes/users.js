@@ -75,7 +75,7 @@ router.route('/register')
     }
     ses.user = user
     //res.send("ois"+user.username)
-    res.redirect('/users/dashboard') 
+    res.render('dashboard', {usuario: req.session.user.username});
   }
     return false
 });
@@ -90,7 +90,8 @@ router.route('/dashboard')
     result.value.username = req.session.user.username
     const newTweet = await new Post(result.value)
       await newTweet.save()
-      res.redirect('/users/show')
+      //res.render('dashboard', {user_username = req.session.user.username})
+      res.render('dashboard',{usuario: req.session.user.username});
   })
      //const user= await Post.findOne({'username': result.value.username })
      
@@ -106,6 +107,6 @@ router.route('/dashboard')
     Post.find({ 'username': req.session.user.username }, 'username content', function (err, post) {
       if (err) return handleError(err);
       res.send(post)
-    }).limit(10);
+    }).limit(10)
   })
   module.exports = router

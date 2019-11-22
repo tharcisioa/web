@@ -13,12 +13,14 @@
   <div id="box8">
  
 <form action="/users/dashboard" method="POST">
+        
         <label for="msg">Tweet:</label>
-        <textarea type="content" id="inputContent" name="content" class="form-control"id="msg"></textarea>
+        <textarea type="content" id="usuario" name="content" class="form-control"id="msg"></textarea>
         <div class="button21">
         <button type="submit">Enviar sua mensagem</button>
         <input type="file" id="myFile">
     </div>
+    <p id="user_username"></p>
 </form>
 
 
@@ -36,14 +38,11 @@
     <div id="box4">
       <div id="box7">
       <div class="image2"> </div>
-      <button class="button3"><font face=helvetica >Entrar</font></button>
 
       </div>
-      <div id="box6" <div class="font5">Veja o que está acontecendo no mundo agora</div></div>
-      <div id="box5"><div class="font6">Participe hoje do Twitter. </div></div>
-      <button class="button"> <a href="/users/register" <font face=helvetica size="3">Inscreva-se</font></a></button>
-      <button class="button2"><a href="/users/login" <font face=helvetica size="3">Entrar</font></a></button>
-
+      <div id="box6" <div class="font5">Bem vindo, <h1>{{usuario}}</h1></div></div>
+      
+      
   </div>
   </div>
   <div id="box3"
