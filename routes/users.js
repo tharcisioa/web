@@ -3,9 +3,12 @@ const router = express.Router()
 const Joi = require('joi')
 const passport = require('passport')
 const bcrypt = require ('bcryptjs')
+const app = express()
  
 const User = require('../models/user')
 const Post = require('../models/post')
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser');
  
  
 //validation schema
@@ -20,7 +23,9 @@ const userSchema = Joi.object().keys({
 const postSchema = Joi.object().keys({
   content: Joi.string().required()
 })
- 
+const postSchema2 = Joi.object().keys({
+  content: Joi.string().required()
+})
 router.route('/register')
   .get((req, res) => {
     res.render('register')
@@ -65,6 +70,7 @@ router.route('/register')
   .post(async(req, res) =>{
     const result = Joi.validate(req.body, userSchema)
     ses = req.session
+    console.log(req.body)
     const user = await User.findOne({'email': result.value.email})
           if(user){
             //const hash = await User.hashPassword(result.value.password)
@@ -79,34 +85,60 @@ router.route('/register')
   }
     return false
 });
-router.route('/dashboard')
-  .get((req, res) => {
-    res.render('dashboard')
-    
-  })
-  .post(async(req,res) =>{
+router.route('/dashboard').post(async(req,res) =>{
     session = req.session
     const result = Joi.validate(req.body, postSchema)
     result.value.username = req.session.user.username
     const newTweet = await new Post(result.value)
       await newTweet.save()
-      //res.render('dashboard', {user_username = req.session.user.username})
-      res.render('dashboard',{usuario: req.session.user.username});
+      //res.render('dashboard',{usuario: req.session.user.username});
   })
+
+  router.route('/showed').get((req, res) => {
+      session = req.session
+      Post.find({ 'username': req.session.user.username }, 'content', function (err, post) {
+        if (err) return handleError(err);
+       return post
+    }).then((username) => {
+      res.end('<li>'+username.map((username) => {
+        return username.content;
+      }).join('</li><li>')+'</li>');
+    });
+  });
+
+  router.get('/search', function(req, res){
+    session = req.session
+    console.log(req.query)
+    Post.find({ 'username': req.session.user.username , 'content':req.query.nome}, 'content', function (err, post) {
+      if (err) return handleError(err);
+  }).then((username) => {
+    res.end('<li>'+username.map((username) => {
+      return username.content;
+    }).join('</li><li>')+'</li>');
+  });
+});
+
+
+
+
+
+
+
      //const user= await Post.findOne({'username': result.value.username })
      
 
 
-  router.route('/show')
-    .get((req, res) => {
-          res.render('show')
+ //router.route('/show')
+   // .get((req, res) => {
+    //      res.render('show')
     
-  })
-  .post(async(req,res) =>{
-    session = req.session
-    Post.find({ 'username': req.session.user.username }, 'username content', function (err, post) {
-      if (err) return handleError(err);
-      res.send(post)
-    }).limit(10)
-  })
+  //})
+   //.post(async(req,res) =>{
+   // session = req.session
+
+   // Post.find({ 'username': req.session.user.username }, 'content', function (err, post) {
+    //  if (err) return handleError(err);
+      //res.send(post)
+   // });
+//  })
   module.exports = router

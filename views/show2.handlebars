@@ -4,70 +4,34 @@
     <style rel="stylesheet" type="text/css" >
     @import url("https://codepen.io/tharcisioamorim/pen/abbEjdZ.css"); </style>
 </head>
-<style>
-#myProgress {
-  width: 100%;
-  background-color: #ddd;
-}
 
-#myBar {
-  width: 1%;
-  height: 30px;
-  background-color: #4CAF50;
-}
-</style>
-<body > 
-  
+<body>
   <div class="box">
-    <p id = "myBar"> </p>
     <div class="image">
     </div>
   </div>
   <div id="box8">
+ 
 <form action="/users/dashboard" method="POST">
         
         <label for="msg">Tweet:</label>
         <textarea type="content" id="usuario" name="content" class="form-control"id="msg"></textarea>
-        <div class="button21" >
+        <div class="button21">
         <button type="submit">Enviar sua mensagem</button>
-        
+        <input type="file" id="myFile">
     </div>
     <p id="user_username"></p>
-    
-    
-</form>
-<button id="busca" type="submit" onclick="progress(); meh()">buscar tweet</button>
-
- 
-
- 
-  <br/>
-   
-  
-
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-</script>
-<form  action="" method="GET" >
-  <div class="button21">
-        <div id="meme" class="button21"> </div> </div>
 </form>
 
 
-<script>
-
-</script>
-
-</body>
-
-
-
-
-
-
-        
+<form action="/users/show" method="POST">
+        <div class="button21">
+        <button type="submit">Buscar tweet</button>
     </div>
+     <div id="box6" <div class="font5"> <h1>{{tweet}}</h1></div></div>
 </form>
+
+
 
 
 
@@ -78,65 +42,9 @@
       <div class="image2"> </div>
 
       </div>
-      <div class="font5">Bem vindo, <h1> {{usuario}}</h1></div></div>
-       <div id="meme2" class="button21"> </div> </div>
-      <script> function meh(){
-        var xmlhttp= new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function(){
-          if (xmlhttp.readyState === 4 && xmlhttp.status ===200){
-          document.getElementById("meme2").innerHTML = xmlhttp.responseText;
-          }
-        };
-        xmlhttp.open("GET", "showed", true);
-        xmlhttp.send();
-      }
-      </script>
-
-
-      <script> function meh2(){
-        var xmlhttp= new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function(){
-          if (xmlhttp.readyState === 4 && xmlhttp.status ===200){
-          document.getElementById("meme2").innerHTML = xmlhttp.responseText;
-          }
-        };
-        xmlhttp.open("GET", "search", true);
-        xmlhttp.send();
-      }
-      </script>
-   
-          <script> function progress(){
-         var i = 0;
-      if (i == 0) {
-    i = 1;
-    var elem = document.getElementById("myBar");
-    var width = 1;
-    var id = setInterval(frame, 2);
-    function frame() {
-      if (width >= 100) {
-        clearInterval(id);
-        i = 0;
-      } else {
-        width++;
-        elem.style.width = width + "%";
-      }
-    }
-  }
-}
-      </script>
-    <script type="text/javascript">
-  function doSomething() {
-    $('#busca').click();
-  }
-  setInterval('doSomething()',2000);
-</script>
-
-
-
-
-
-
-
+     
+      
+      
   </div>
   </div>
   <div id="box3"

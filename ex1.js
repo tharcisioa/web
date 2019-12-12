@@ -40,6 +40,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
  
+
 // 4
 app.use(flash())
 app.use((req, res, next) => {
@@ -51,6 +52,7 @@ app.use((req, res, next) => {
 // 5
 app.use('/', require('./routes/index'))
 app.use('/users', require('./routes/users'))
+app.engine('html', require('ejs').renderFile);
  
 // 6
 // catch 404 and forward to error handle
