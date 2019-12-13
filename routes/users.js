@@ -10,7 +10,7 @@ const Post = require('../models/post')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
  
- 
+
 //validation schema
  
 const userSchema = Joi.object().keys({
@@ -85,12 +85,12 @@ router.route('/register')
   }
     return false
 });
-router.route('/dashboard').post(async(req,res) =>{
+router.route('/dashboard').post((req,res) =>{
     session = req.session
     const result = Joi.validate(req.body, postSchema)
     result.value.username = req.session.user.username
-    const newTweet = await new Post(result.value)
-      await newTweet.save()
+    const newTweet =  new Post(result.value)
+      newTweet.save()
       //res.render('dashboard',{usuario: req.session.user.username});
   })
 
