@@ -19,8 +19,7 @@
   }
 </style>
 
-<body>
-
+<body onload="meh()" id = "busca">
   <div class="box">
     <p id="myBar"> </p>
     <div class="image">
@@ -32,14 +31,14 @@
       <label for="msg">Tweet:</label>
       <textarea type="content" id="usuario" name="content" class="form-control" id="msg"></textarea>
       <div class="button21">
-        <button type="submit">Enviar sua mensagem</button>
+        <button onclick = "progress()" type="submit">Enviar sua mensagem</button>
 
       </div>
       <p id="user_username"></p>
 
 
     </form>
-    <button id="busca" type="submit" onclick="progress(); meh()">buscar tweet</button>
+ 
 
 
 
@@ -146,7 +145,7 @@
 </script>
 <script type="text/javascript">
   function doSomething() {
-    $('#busca').click();
+    $('#busca').load();
   }
   setInterval('doSomething()', 2000);
 </script>
